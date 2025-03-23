@@ -15,4 +15,10 @@ public class Automaton {
         this.finalStates = new HashSet<>(finalStates);
         this.transitions = new HashSet<>(transitions);
     }
+    public Automaton(Set<Character> alphabet){
+        if(!AlphabetValidator.isValidAlphabet(alphabet)){
+            throw new IllegalArgumentException("Невалидна азбука. Позволените символи са между a и z и от 0 до 9.");
+        }
+        this.alphabet=alphabet;
+    }
 }
