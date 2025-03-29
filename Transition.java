@@ -20,4 +20,11 @@ public class Transition {
     public char getSymbol() {
         return symbol;
     }
+
+    @Override
+    public String toString() {
+        return "От състояние " + startingFrom +
+                " към състояние " + goingTo +
+                " при символ" + symbol ;
+    }
 }
