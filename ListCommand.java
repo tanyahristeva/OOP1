@@ -8,6 +8,6 @@ public class ListCommand implements Command {
 
     @Override
     public void execute(String[] args) {
-        manager.listAutomatons();
+        manager.list();
     }
 }

@@ -23,7 +23,7 @@ public class AutomatonManager {
     public Automaton getAutomaton(int id){
         return automatons.get(id);
     }
-    public void listAutomatons(){
+    public void list(){
         System.out.println("Всички автомати: ") ;
        for(Integer id: automatons.keySet()){
            System.out.println("ID: "+id);

@@ -1,9 +1,9 @@
 public class Transition {
     private final State startingFrom;
     private final State goingTo;
-    private final char symbol;
+    private final String symbol;
 
-    public Transition(State startingFrom, State goingTo, char symbol) {
+    public Transition(State startingFrom, State goingTo, String symbol) {
         this.startingFrom = startingFrom;
         this.goingTo = goingTo;
         this.symbol = symbol;
@@ -17,14 +17,18 @@ public class Transition {
         return goingTo;
     }
 
-    public char getSymbol() {
+    public String getSymbol() {
         return symbol;
+    }
+
+    public boolean isEpsilon() {
+        return "ε".equals(symbol);
     }
 
     @Override
     public String toString() {
         return "От състояние " + startingFrom +
                 " към състояние " + goingTo +
-                " при символ" + symbol ;
+                " при символ" + (isEpsilon() ? "ε" : symbol);
     }
 }
