@@ -30,6 +30,14 @@ public class Automaton {
         return transitionManager.getTransitions();
     }
 
+    public State getStartState() {
+        return startState;
+    }
+
+    public Set<State> getFinalStates() {
+        return finalStates;
+    }
+
     public Automaton(Set<Character> alphabet){
         if(!AlphabetValidator.isValidAlphabet(alphabet)){
             throw new IllegalArgumentException("Невалидна азбука. Позволените символи са между a и z и от 0 до 9.");
