@@ -15,4 +15,14 @@ public class TransitionManager {
     public Set<Transition> getTransitions() {
         return transitions;
     }
+
+    public Set<State> getTargetTransitions(State state, char symbol){
+        Set<State>targets=new HashSet<>();
+        for(Transition t:transitions){
+            if(t.getStartingFrom().equals(state)&&t.getSymbol()==symbol){
+                targets.add(t.getGoingTo());
+            }
+        }
+        return targets;
+    }
 }
