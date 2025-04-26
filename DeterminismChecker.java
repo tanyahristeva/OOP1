@@ -6,13 +6,13 @@ import java.util.Set;
 public class DeterminismChecker {
 
     public static boolean isDeterministic(Automaton automaton){
-        Map<String, Set<String>> transitionMap=new HashMap<>();
+        Map<String, Set<Character>> transitionMap=new HashMap<>();
         for(Transition t: automaton.getTransitions()){
-            if(t.getSymbol().equals("ε")){
+            if(t.isEpsilon()){
                 return false;
             }
             String key=t.getStartingFrom().getName();
-            Set<String> used;
+            Set<Character> used;
 
             if(transitionMap.containsKey(key)){
                 used=transitionMap.get(key);

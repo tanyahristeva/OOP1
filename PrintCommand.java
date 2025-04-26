@@ -1,12 +1,16 @@
 public class PrintCommand implements Command {
-    private int id;
-
-    public PrintCommand(int id) {
-        this.id = id;
-    }
 
     @Override
     public void execute(String[] args) {
-        AutomatonManager.getInstance().print(id);
+        if(args.length<2){
+            System.out.println("Нужно е ID. ");
+            return;
+        }
+        try{
+            int id=Integer.parseInt(args[1]);
+            AutomatonManager.getInstance().print(id);
+        }catch (NumberFormatException e){
+            System.out.println("Невалидно ID.");
+        }
     }
 }

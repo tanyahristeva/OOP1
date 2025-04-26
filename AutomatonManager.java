@@ -5,6 +5,7 @@ import java.util.Set;
 public class AutomatonManager {
     private static AutomatonManager instance;
     private final Map<Integer, Automaton> automatons=new HashMap<>();
+    private int nextID=0;
 
     private AutomatonManager(){};
 
@@ -16,8 +17,10 @@ public class AutomatonManager {
     }
 
     public int addAutomaton(Automaton automaton){
-        automatons.put(automaton.getId(), automaton);
-        return automaton.getId();
+        int id=nextID++;
+        automaton.setId(id);
+        automatons.put(id, automaton);
+        return id;
     }
 
     public Automaton getAutomaton(int id){

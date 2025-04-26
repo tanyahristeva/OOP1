@@ -20,7 +20,7 @@ public class LanguageChecker {
             }
 
             for (Transition transition : automaton.getTransitions()) {
-                if (transition.getStartingFrom().equals(current) && transition.getSymbol().equals("ε")) {
+                if (transition.getStartingFrom().equals(current)) {
                     toVisit.add(transition.getGoingTo());
                 }
             }
