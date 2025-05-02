@@ -1,11 +1,14 @@
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 public class CommandRegistry {
     private static Map<String,Command> commands=new HashMap<>();
+    private static Map<String, String> commandDescriptions=new HashMap<>();
+    public static void registerCommand(String name, Command command,String description){
 
-    public static void registerCommand(String name, Command command){
         commands.put(name,command);
+        commandDescriptions.put(name,description);
     }
     public static Command getCommand(String name){
         return commands.get(name);
@@ -19,4 +22,12 @@ public class CommandRegistry {
             System.out.println("Невалидна команда: "+ name);
         }
     }
+
+   public static String getCommandDescription(String name){
+        return commandDescriptions.getOrDefault(name,"Няма описание.");
+   }
+
+   public static Set<String> getSupportedCommands(){
+        return commands.keySet();
+   }
 }

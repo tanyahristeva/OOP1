@@ -1,3 +1,5 @@
+import java.util.Set;
+
 public class PrintCommand implements Command {
 
     @Override
@@ -8,8 +10,25 @@ public class PrintCommand implements Command {
         }
         try{
             int id=Integer.parseInt(args[1]);
-            AutomatonManager.getInstance().print(id);
-        }catch (NumberFormatException e){
+           Automaton automaton= AutomatonManager.getInstance().getAutomaton(id);
+           if(automaton==null){
+               System.out.println("Автомат с ID "+id+" не съществува.");
+               return;
+           }
+
+            Set<Transition> transitions=automaton.getTransitions();
+           if(transitions.isEmpty()){
+               System.out.println("Автомат с ID "+id+" няма преходи.");
+               return;
+           }
+           System.out.println("Преходи на автомат с ID "+id+" :");
+           for (Transition transition:transitions){
+               System.out.println(transition);
+           }
+
+        }
+
+        catch (NumberFormatException e){
             System.out.println("Невалидно ID.");
         }
     }
