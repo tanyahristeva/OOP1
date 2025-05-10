@@ -1,8 +1,11 @@
+import java.io.Serializable;
 import java.util.Objects;
 
-public class State {
+public class State implements Serializable {
+    private static final long serialVersionUID=1L;
+
     private final String name;
-    private final boolean isFinal;
+    private boolean isFinal;
 
 
     public State(String name, boolean isFinal) {
@@ -18,6 +21,10 @@ public class State {
         return isFinal;
     }
 
+    public void setFinal(boolean aFinal) {
+        isFinal = aFinal;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -29,6 +36,11 @@ public class State {
     @Override
     public int hashCode() {
         return Objects.hash(name);
+    }
+
+    @Override
+    public String toString() {
+        return  name;
     }
 }
 

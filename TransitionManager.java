@@ -1,7 +1,9 @@
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-public class TransitionManager {
+public class TransitionManager implements Serializable {
+    private static final long serialVersionUID=1L;
     private Set<Transition> transitions;
 
     public TransitionManager() {

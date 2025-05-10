@@ -12,5 +12,8 @@ public class CommandInitializer {
         CommandRegistry.registerCommand("save as",new SaveAsCommand(fileManager),"Запазване на файл в");
         CommandRegistry.registerCommand("help",new HelpCommand(),"Помощ");
         CommandRegistry.registerCommand("exit",new ExitCommand(fileManager),"Изход");
+        CommandRegistry.registerCommand("serialize",new SaveSerializedAutomaton(AutomatonManager.getInstance()),"save");
+        CommandRegistry.registerCommand("load",new LoadCommand(AutomatonManager.getInstance()),"LOAD");
+
     }
 }

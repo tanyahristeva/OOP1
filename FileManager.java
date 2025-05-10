@@ -2,6 +2,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+
 public class FileManager {
     private String currentPath;
     private String fileContent;
@@ -82,4 +83,5 @@ public class FileManager {
     public boolean isFileOpen(){
         return currentPath!=null;
     }
+
 }
