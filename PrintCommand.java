@@ -15,7 +15,9 @@ public class PrintCommand implements Command {
                System.out.println("Автомат с ID "+id+" не съществува.");
                return;
            }
-
+            if(automaton.getTransitionManager()==null){
+                System.out.println("Няма преходи.");
+            }
             Set<Transition> transitions=automaton.getTransitions();
            if(transitions.isEmpty()){
                System.out.println("Автомат с ID "+id+" няма преходи.");
