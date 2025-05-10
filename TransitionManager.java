@@ -1,20 +1,24 @@
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class TransitionManager implements Serializable {
     private static final long serialVersionUID=1L;
-    private Set<Transition> transitions;
+    private List<Transition> transitions;
 
     public TransitionManager() {
-        transitions = new HashSet<>();
+        transitions = new ArrayList<>();
     }
 
     public void addTransition(Transition transition) {
-        transitions.add(transition);
+        if (!transitions.contains(transition)) {
+            transitions.add(transition);
+        }
     }
 
-    public Set<Transition> getTransitions() {
+    public List<Transition> getTransitions() {
         return transitions;
     }
 

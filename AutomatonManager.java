@@ -1,4 +1,5 @@
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -38,7 +39,7 @@ public class AutomatonManager {
             System.out.println("Автомат с ID - "+id+" не съществува.");
             return;
         }
-        Set<Transition> transitions=automaton.getTransitions();
+        List<Transition> transitions=automaton.getTransitions();
         if(transitions.isEmpty()){
             System.out.println("Автомат с ID - "+id+" няма преходи.");
             return;

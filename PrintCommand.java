@@ -1,3 +1,4 @@
+import java.util.List;
 import java.util.Set;
 
 public class PrintCommand implements Command {
@@ -18,7 +19,7 @@ public class PrintCommand implements Command {
             if(automaton.getTransitionManager()==null){
                 System.out.println("Няма преходи.");
             }
-            Set<Transition> transitions=automaton.getTransitions();
+            List<Transition> transitions=automaton.getTransitions();
            if(transitions.isEmpty()){
                System.out.println("Автомат с ID "+id+" няма преходи.");
                return;

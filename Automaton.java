@@ -32,7 +32,7 @@ public class Automaton implements Serializable {
         this.id = id;
     }
 
-    public Set<Transition> getTransitions() {
+    public List<Transition> getTransitions() {
         return transitionManager.getTransitions();
     }
 

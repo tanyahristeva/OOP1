@@ -33,6 +33,6 @@ public class Transition implements Serializable {
     public String toString() {
         return "От състояние " + startingFrom +
                 " към състояние " + goingTo +
-                " при символ" + (isEpsilon() ? "ε" : symbol);
+                " при символ " + (isEpsilon() ? "ε" : symbol);
     }
 }
