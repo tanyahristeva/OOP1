@@ -7,7 +7,6 @@ public class Automaton implements Serializable {
     private Set<State> states;
     private State startState;
     private Set<State> finalStates;
-    //private Set<Transition> transitions;
     private TransitionManager transitionManager;
 
 
@@ -16,7 +15,6 @@ public class Automaton implements Serializable {
         this.states = new HashSet<>(states);
         this.startState = startState;
         this.finalStates = new HashSet<>(finalStates);
-       // this.transitions = transitionManager.getTransitions();
         this.transitionManager=transitionManager;
 
     }
@@ -36,8 +34,20 @@ public class Automaton implements Serializable {
         return transitionManager.getTransitions();
     }
 
+    public Set<Character> getAlphabet() {
+        return alphabet;
+    }
+
     public State getStartState() {
         return startState;
+    }
+
+    public void setStartState(State startState) {
+        this.startState = startState;
+    }
+
+    public void setFinalStates(Set<State> finalStates) {
+        this.finalStates = finalStates;
     }
 
     public Set<State> getFinalStates() {
@@ -55,7 +65,7 @@ public class Automaton implements Serializable {
         this.transitionManager = new TransitionManager();
     }
 
-    public void addTransition(Transition transition){
+    public void addTransition(Transition transition) {
         transitionManager.addTransition(transition);
     }
 

@@ -31,4 +31,14 @@ public class TransitionManager implements Serializable {
         }
         return targets;
     }
+
+    public List<Transition> getTransitionFrom(State state){
+        List<Transition>result=new ArrayList<>();
+        for(Transition transition:transitions){
+            if(transition.getStartingFrom().equals(state)){
+                result.add(transition);
+            }
+        }
+        return result;
+    }
 }

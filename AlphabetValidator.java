@@ -2,7 +2,7 @@ import java.util.Set;
 
 public class AlphabetValidator {
 
-    private static final String validCharacters ="abcdefghijklmnopqrstuvwxyz0123456789";
+    private static final String validCharacters ="abcdefghijklmnopqrstuvwxyz0123456789ε";
 
     public static boolean isValidAlphabet(Set<Character> alphabet){
         if(alphabet==null||alphabet.isEmpty()){
