@@ -1,6 +1,5 @@
 public class DeterministicCommand implements Command {
 
-
     @Override
     public void execute(String[] args) {
         if (args.length < 2) {
