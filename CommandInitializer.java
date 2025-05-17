@@ -12,8 +12,13 @@ public class CommandInitializer {
         CommandRegistry.registerCommand("save as",new SaveAsCommand(fileManager),"Запазване на файл в");
         CommandRegistry.registerCommand("help",new HelpCommand(),"Помощ");
         CommandRegistry.registerCommand("exit",new ExitCommand(fileManager),"Изход");
-        CommandRegistry.registerCommand("serialize",new SaveSerializedAutomaton(AutomatonManager.getInstance()),"save");
-        CommandRegistry.registerCommand("load",new LoadCommand(AutomatonManager.getInstance()),"LOAD");
-
+        CommandRegistry.registerCommand("serialize",new SaveSerializedAutomaton(AutomatonManager.getInstance()),"Сериализиране на автомат.");
+        CommandRegistry.registerCommand("load",new LoadCommand(AutomatonManager.getInstance()),"Зареждане на сериализиран автомат.");
+        CommandRegistry.registerCommand("concat",new ConcatCommand(AutomatonManager.getInstance()),"Конкатинация на автомати.");
+        CommandRegistry.registerCommand("union",new UnionCommand(AutomatonManager.getInstance()),"Обединение на автомати.");
+        CommandRegistry.registerCommand("finite",new FiniteLanguageCommand(AutomatonManager.getInstance()),"Проверява дали езикът на автомат е краен.");
+        CommandRegistry.registerCommand("mutator",new DeterministicMutatorCommand(AutomatonManager.getInstance()),"Мутатор за детерминиране на автомат.");
+        CommandRegistry.registerCommand("reg",new RegCommand(AutomatonManager.getInstance()),"Създава нов автомат по регулярен израз.");
+        CommandRegistry.registerCommand("un",new PositiveClosureCommand(AutomatonManager.getInstance()),"Намира позитивна обвивка на автомат и създава нов автомат.");
     }
 }
