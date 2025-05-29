@@ -1,12 +1,33 @@
-import java.io.BufferedReader;
-import java.io.FileReader;
+package utils;
+
+import base.Automaton;
+import base.State;
+import base.Transition;
+import validator.AlphabetValidator;
+import manager.TransitionManager;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
-
+/**
+ * Клас за парсване на автомати от текстови файлове.
+ * Поддържа конструиране на автомат от дефиниции на състояния, преходи, начални и финални състояния.
+ * Поддържа както единични автомати, така и множество автомати, разделени с "-----".
+ */
 public class Parser {
-
+    /**
+     * Парсира списък от редове, дефиниращи автомат в обект от тип автомат.
+     * Използва се за създаване на автомат от текстови редове, съдържащи:
+     * states: изброяване на състояния
+     * start: начално състояние
+     * final: финални състояния
+     * transitions: - преходи във формат from symbol to
+     *
+     * @param lines списък с текстови редове, описващи автомат
+     * @return създадения автомат
+     * @throws IllegalArgumentException при невалиден входен формат
+     */
     public static Automaton parseFromLines(List<String> lines) {
 
         TransitionManager transitionManager = new TransitionManager();
@@ -65,8 +86,15 @@ public class Parser {
             }
             return new Automaton(alphabet, new HashSet<>(states.values()), startState, finalStates, transitionManager);
         }
-
-        public static List<Automaton> parseMultipleAutomatons (String filePath) throws IOException {
+    /**
+     * Парсира файл, съдържащ множество автомати, разделени с редове "-----".
+     * Всеки блок между разделителите трябва да съдържа валидна дефиниция на автомат.
+     *
+     * @param filePath път до текстовия файл
+     * @return списък от автомати, дефинирани във файла
+     * @throws IOException при проблем при четене на файла
+     */
+        public static List<Automaton> parseMultipleAutomatons (String filePath) throws IOException{
             List<String> allLines = Files.readAllLines(Paths.get(filePath));
             List<Automaton> automatons = new ArrayList<>();
             List<String> current = new ArrayList<>();
@@ -87,8 +115,14 @@ public class Parser {
             return automatons;
         }
 
-
-    public static Automaton parseFromFile(String filePath) throws IOException {
+    /**
+     * Парсира текстов файл, съдържащ дефиниция на един автомат.
+     *
+     * @param filePath път до файла с един автомат
+     * @return създаденият автомат
+     * @throws IOException ако възникне грешка при четене на файла
+     */
+    public static Automaton parseFromFile(String filePath) throws IOException{
         List<String> lines = Files.readAllLines(Paths.get(filePath));
         return parseFromLines(lines);
     }

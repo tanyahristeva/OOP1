@@ -1,24 +1,41 @@
+package command;
+
+import manager.AutomatonManager;
+import utils.FileHandler;
+
+import java.nio.channels.CancelledKeyException;
+
+/**
+ * Инициализатор на командите в програмата.
+ * Регистрира всички налични команди в CommandRegistry.
+ */
 public class CommandInitializer {
+    /**
+     * Инициализира и регистрира всички команди.
+     *
+     * @param fileHandler файловия мениджър за командите, които го изискват
+     */
+    public static void initializeCommands(FileHandler fileHandler){
 
-    public static void initializeCommands(FileManager fileManager){
-
-        CommandRegistry.registerCommand("list",new ListCommand(AutomatonManager.getInstance()),"Извеждане на всички автомати.");
-        CommandRegistry.registerCommand("print",new PrintCommand(),"Принтиране на конкретен автомат по ID.");
-        CommandRegistry.registerCommand("empty", new EmptyCommand(),"Проверка дали даден автомат има празен език. ");
-        CommandRegistry.registerCommand("deterministic",new DeterministicCommand(),"Проверка дали даден автомат е детерминиран.");
-        CommandRegistry.registerCommand("recognize",new RecognizeCommand(),"Проверка дали дадена дума е в езика на автомата. ");
-        CommandRegistry.registerCommand("open",new OpenCommand(fileManager),"Отваряне на файл.");
-        CommandRegistry.registerCommand("close",new CloseCommand(fileManager),"Затваряне на файл.");
-        CommandRegistry.registerCommand("save as",new SaveAsCommand(fileManager),"Запазване на файл в");
-        CommandRegistry.registerCommand("help",new HelpCommand(),"Помощ");
-        CommandRegistry.registerCommand("exit",new ExitCommand(fileManager),"Изход");
-        CommandRegistry.registerCommand("serialize",new SaveSerializedAutomaton(AutomatonManager.getInstance()),"Сериализиране на автомат.");
-        CommandRegistry.registerCommand("load",new LoadCommand(AutomatonManager.getInstance()),"Зареждане на сериализиран автомат.");
-        CommandRegistry.registerCommand("concat",new ConcatCommand(AutomatonManager.getInstance()),"Конкатинация на автомати.");
-        CommandRegistry.registerCommand("union",new UnionCommand(AutomatonManager.getInstance()),"Обединение на автомати.");
-        CommandRegistry.registerCommand("finite",new FiniteLanguageCommand(AutomatonManager.getInstance()),"Проверява дали езикът на автомат е краен.");
-        CommandRegistry.registerCommand("mutator",new DeterministicMutatorCommand(AutomatonManager.getInstance()),"Мутатор за детерминиране на автомат.");
-        CommandRegistry.registerCommand("reg",new RegCommand(AutomatonManager.getInstance()),"Създава нов автомат по регулярен израз.");
-        CommandRegistry.registerCommand("un",new PositiveClosureCommand(AutomatonManager.getInstance()),"Намира позитивна обвивка на автомат и създава нов автомат.");
+        AutomatonManager automatonManager=AutomatonManager.getInstance();
+        CommandRegistry.registerCommand(CommandNames.LIST,new ListCommand());
+        CommandRegistry.registerCommand(CommandNames.PRINT,new PrintCommand(automatonManager));
+        CommandRegistry.registerCommand(CommandNames.EMPTY ,new EmptyCommand(automatonManager));
+        CommandRegistry.registerCommand(CommandNames.DETERMINISTIC,new DeterministicCommand(automatonManager));
+        CommandRegistry.registerCommand(CommandNames.RECOGNIZE,new RecognizeCommand(automatonManager));
+        CommandRegistry.registerCommand(CommandNames.OPEN,new OpenCommand(fileHandler,automatonManager));
+        CommandRegistry.registerCommand(CommandNames.SAVE,new SaveCommand(fileHandler));
+        CommandRegistry.registerCommand(CommandNames.CLOSE,new CloseCommand(fileHandler));
+        CommandRegistry.registerCommand(CommandNames.SAVEAS,new SaveAsCommand(fileHandler));
+        CommandRegistry.registerCommand(CommandNames.HELP,new HelpCommand());
+        CommandRegistry.registerCommand(CommandNames.EXIT,new ExitCommand(fileHandler));
+        CommandRegistry.registerCommand(CommandNames.SERIALIZE,new SaveSerializedAutomatonCommand(automatonManager));
+        CommandRegistry.registerCommand(CommandNames.LOAD,new LoadCommand(automatonManager));
+        CommandRegistry.registerCommand(CommandNames.CONCAT,new ConcatCommand(automatonManager));
+        CommandRegistry.registerCommand(CommandNames.UNION,new UnionCommand(automatonManager));
+        CommandRegistry.registerCommand(CommandNames.FINITE,new FiniteLanguageCommand(automatonManager));
+        CommandRegistry.registerCommand(CommandNames.MUTATOR,new DeterministicMutatorCommand(automatonManager));
+        CommandRegistry.registerCommand(CommandNames.REG,new RegCommand(automatonManager));
+        CommandRegistry.registerCommand(CommandNames.UN,new PositiveClosureCommand(automatonManager));
     }
 }

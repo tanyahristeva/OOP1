@@ -1,38 +1,40 @@
-import java.util.List;
-import java.util.Set;
+package command;
 
+import base.Automaton;
+import base.Transition;
+import manager.AutomatonManager;
+
+import java.util.List;
+/**
+ * Команда за извеждане на преходите на автомат.
+ */
 public class PrintCommand implements Command {
+    /**
+     * Изпълнява командата за извеждане на преходите.
+     * Очаква аргументи във формат: {@code print <id>}
+     * @param args аргументи на командата, където args[1] е идентификационният номер на автомата
+     */
+    private final AutomatonManager automatonManager;
+
+    public PrintCommand(AutomatonManager automatonManager) {
+        this.automatonManager = automatonManager;
+    }
 
     @Override
     public void execute(String[] args) {
-        if(args.length<2){
-            System.out.println("Нужно е ID. ");
-            return;
+        if(args.length < 2) {
+            throw new IllegalArgumentException("Нужни сa 2 ID-та.");
         }
-        try{
-            int id=Integer.parseInt(args[1]);
-           Automaton automaton= AutomatonManager.getInstance().getAutomaton(id);
-           if(automaton==null){
-               System.out.println("Автомат с ID "+id+" не съществува.");
-               return;
-           }
-            if(automaton.getTransitionManager()==null){
-                System.out.println("Няма преходи.");
-            }
-            List<Transition> transitions=automaton.getTransitions();
-           if(transitions.isEmpty()){
-               System.out.println("Автомат с ID "+id+" няма преходи.");
-               return;
-           }
-           System.out.println("Преходи на автомат с ID "+id+" :");
-           for (Transition transition:transitions){
-               System.out.println(transition);
-           }
-
-        }
-
-        catch (NumberFormatException e){
+        try {
+            int id = Integer.parseInt(args[1]);
+            automatonManager.print(id);
+        } catch (NumberFormatException e) {
             System.out.println("Невалидно ID.");
         }
+    }
+
+    @Override
+    public String getDescription() {
+        return "Команда за извеждане на преходите на автомат.";
     }
 }

@@ -1,7 +1,24 @@
-import java.util.*;
+package utils;
 
+import base.Automaton;
+import base.State;
+import base.Transition;
+import manager.TransitionManager;
+
+import java.util.*;
+/**
+ * Клас, реализиращ трансформация на недетерминиран автомат в детерминиран
+ * чрез стандартния алгоритъм на детерминизация (subset construction).
+ */
 public class DeterministicMutator {
-    public static Automaton determinize(Automaton nfa) throws IllegalAccessException {
+    /**
+     * Детерминира недетерминиран автомат.
+     *
+     * @param nfa недетерминиран автомат (с ε-преходи)
+     * @return детерминиран автомат, еквивалентен на входния
+     * @throws IllegalAccessException aко възникне грешка при създаване на състояния
+     */
+    public static Automaton determinize(Automaton nfa){
         Set<Character> alphabet = prepareAlphabet(nfa);
         Set<State>inititalStateSet=new HashSet<>();
         inititalStateSet.add(nfa.getStartState());
@@ -25,13 +42,24 @@ public class DeterministicMutator {
 
         return new Automaton(alphabet, dfaStates, startState, finalStates, transitions);
     }
-
+    /**
+     * Подготвя азбуката на автомата, като премахва ε-преходите.
+     *
+     * @param nfa недетерминиран автомат
+     * @return азбука без символа ε
+     */
     private static Set<Character> prepareAlphabet(Automaton nfa) {
         Set<Character> alphabet = new HashSet<>(nfa.getAlphabet());
         alphabet.remove('ε');
         return alphabet;
     }
-
+    /**
+     * Изчислява ε-затваряне (множество от всички състояния, които могат бъдат достигнати чрез ε-преходи.
+     *
+     * @param states начално множество състояния
+     * @param manager мениджър на преходите
+     * @return ε-затваряне  на състоянията
+     */
     private static Set<State> calculateEpsilonClosure(Set<State>states, TransitionManager manager) {
         Set<State> closure = new HashSet<>(states);
 
@@ -53,7 +81,13 @@ public class DeterministicMutator {
         } while (changed);
         return closure;
     }
-
+    /**
+     * Създава ново състояние на базата на множество от оригинални състояния.
+     * Името на новото състояние е комбинация от имената на включените състояния.
+     *
+     * @param states множество от състояния
+     * @return ново състояние за детерминирания автомат
+     */
     private static State createNewState(Set<State> states) {
         String name="";
         boolean isFinal = false;
@@ -75,8 +109,17 @@ public class DeterministicMutator {
         }
         return new State(name, isFinal);
     }
-
-    private static void processStates(Automaton nfa, Set<Character> alphabet, Map<Set<State>, State> stateMap, List<Set<State>> pendingStates, Set<State> dfaStates, TransitionManager transitions) throws IllegalAccessException {
+    /**
+     * Обработва всички нови състояния, като прилага трансформации върху всички символи от азбуката.
+     *
+     * @param nfa входният недетерминиран автомат
+     * @param alphabet азбуката без ε
+     * @param stateMap карта от множества към детерминирани състояния
+     * @param pendingStates лист от още непроцесирани състояния
+     * @param dfaStates създадените детерминирани състояния
+     * @param transitions преходите на детерминирания автомат
+     */
+    private static void processStates(Automaton nfa, Set<Character> alphabet, Map<Set<State>, State> stateMap, List<Set<State>> pendingStates, Set<State> dfaStates, TransitionManager transitions) {
         while (!pendingStates.isEmpty()) {
             Set<State> current = pendingStates.remove(0);
             State currentDfaState = stateMap.get(current);
@@ -101,7 +144,12 @@ public class DeterministicMutator {
             }
         }
     }
-
+    /**
+     * Открива финалните състояния на DFA автомата на база оригиналните финални състояния на недетерминирания автомат.
+     *
+     * @param dfaStates всички състояния на DFA автомата
+     * @return множество от финални състояния
+     */
     private static Set<State> findFinalStates(Set<State> dfaStates) {
         Set<State> finals = new HashSet<>();
         for (State s : dfaStates) {

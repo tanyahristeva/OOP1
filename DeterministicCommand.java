@@ -1,17 +1,39 @@
-public class DeterministicCommand implements Command {
+package command;
 
+import base.Automaton;
+import manager.AutomatonManager;
+import utils.DeterminismChecker;
+/**
+ * Команда за проверка дали автомат е детерминиран.
+ * Проверява за наличие на ε-преходи и недетерминирани преходи.
+ *
+ * @see DeterminismChecker
+ * @see AutomatonManager
+ * @see Command
+ */
+public class DeterministicCommand implements Command {
+    private final AutomatonManager automatonManager;
+
+    public DeterministicCommand(AutomatonManager automatonManager) {
+        this.automatonManager = automatonManager;
+    }
+
+    /**
+     * Изпълнява проверка за детерминираност.
+     * Очаква аргументи във формат: {@code deterministic <id>}
+     *
+     * @param args масив с аргументи, където args[1] е ID на автомата
+     */
     @Override
     public void execute(String[] args) {
         if (args.length < 2) {
-            System.out.println("Нужно е ID. ");
-            return;
+            throw new IllegalArgumentException("Нужнo e ID.");
         }
         try {
             int id = Integer.parseInt(args[1]);
-            Automaton automaton = AutomatonManager.getInstance().getAutomaton(id);
+            Automaton automaton = automatonManager.getAutomaton(id);
             if (automaton == null) {
-                System.out.println("Автомат с ID " + id + " не съществува.");
-                return;
+                throw new IllegalArgumentException("Няма автомат с ID: "+id);
             }
 
             if (DeterminismChecker.isDeterministic(automaton)) {
@@ -20,8 +42,13 @@ public class DeterministicCommand implements Command {
                 System.out.println("Автоматът не е детерминиран.");
             }
         } catch (NumberFormatException e) {
-            System.out.println("Неяалидно ID. ");
+            System.out.println("Невалидно ID. ");
         }
+    }
+
+    @Override
+    public String getDescription() {
+        return "Проверка дали даден автомат е детерминиран.";
     }
 }
 

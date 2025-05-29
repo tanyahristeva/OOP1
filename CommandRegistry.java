@@ -1,33 +1,57 @@
+package command;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-
+/**
+ * Регистър за управление на командите в програмата.
+ * Поддържа регистрация, търсене и изпълнение на команди.
+ */
 public class CommandRegistry {
-    private static Map<String,Command> commands=new HashMap<>();
-    private static Map<String, String> commandDescriptions=new HashMap<>();
-    public static void registerCommand(String name, Command command,String description){
+    private static Map<CommandNames,Command> commands=new HashMap<>();
+    //private static Map<String, String> commandDescriptions=new HashMap<>();
+    /**
+     * Регистрира нова команда.
+     *
+     * @param name име на командата
+     * @param command инстанция на командата
+     * //@param description описание на командата
+     */
+    public static void registerCommand(CommandNames name, Command command){
 
         commands.put(name,command);
-        commandDescriptions.put(name,description);
+        //commandDescriptions.put(name,description);
     }
-    public static Command getCommand(String name){
+    /**
+     * Връща команда по име.
+     *
+     * @param name име на командата
+     * @return командата или null ако не съществува
+     */
+    public static Command getCommand(CommandNames name){
         return commands.get(name);
     }
-    public static void executeCommand(String name,String[] args){
-        Command command=commands.get(name);
+
+    /**
+     * Връща описание на команда.
+     *
+     * @param name име на командата
+     * @return описание или "Няма описание" ако командата не е регистрирана
+     */
+   public static String getCommandDescription(CommandNames name){
+        Command command = commands.get(name);
         if(command!=null){
-            command.execute(args);
+            return command.getDescription();
+        }else{
+            return "Няма описание.";
         }
-        else{
-            System.out.println("Невалидна команда: "+ name);
-        }
-    }
-
-   public static String getCommandDescription(String name){
-        return commandDescriptions.getOrDefault(name,"Няма описание.");
    }
-
-   public static Set<String> getSupportedCommands(){
+    /**
+     * Връща множество с всички поддържани команди.
+     *
+     * @return множество с имената на командите
+     */
+   public static Set<CommandNames> getSupportedCommands(){
         return commands.keySet();
    }
 }
